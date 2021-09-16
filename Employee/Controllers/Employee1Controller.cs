@@ -25,52 +25,29 @@ namespace Employee.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Employee1>>> GetEmployee1s()
         {
-            return await _context.Employee1s.OrderBy(raj => raj.Id).ToListAsync();
+            return await _context.Employee1s.ToListAsync();
         }
 
         // GET: api/Employee1/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Employee1>> GetEmployee1(int id)
+        public async Task<ActionResult<Employee1>> GetEmployee1(decimal? id)
         {
-            var employee1 = await _context.Employee1s.FindAsync(id);
-
-            if (employee1 == null)
-            {
-                return NotFound();
-            }
-
-            return employee1;
+            return await _context.Employee1s.FindAsync(id);
         }
 
         // PUT: api/Employee1/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutEmployee1(int id, Employee1 employee1)
+        public async Task<IActionResult> PutEmployee1(decimal? id, Employee1 employee1)
         {
-            if (id != employee1.Id)
+            _context.Entry(employee1).State = EntityState.Modified;
+            if (id != employee1.Id) 
             {
                 return BadRequest();
             }
-
-            _context.Entry(employee1).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!Employee1Exists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
+            await _context.SaveChangesAsync();
+            return Ok();
+            
         }
 
         // POST: api/Employee1
@@ -80,24 +57,21 @@ namespace Employee.Controllers
         {
             _context.Employee1s.Add(employee1);
             await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetEmployee1", new { id = employee1.Id }, employee1);
+            return Ok();
         }
 
         // DELETE: api/Employee1/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteEmployee1(int id)
+        public async Task<IActionResult> DeleteEmployee1(decimal? id)
         {
             var employee1 = await _context.Employee1s.FindAsync(id);
             if (employee1 == null)
             {
-                return NotFound();
+                return BadRequest();
             }
-
             _context.Employee1s.Remove(employee1);
             await _context.SaveChangesAsync();
-
-            return NoContent();
+            return Ok();
         }
 
         private bool Employee1Exists(int id)

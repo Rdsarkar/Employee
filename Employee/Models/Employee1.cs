@@ -7,7 +7,7 @@ namespace Employee.Models
 {
     public partial class Employee1
     {
-        public decimal? Id { get; set; }
+        public decimal Id { get; set; }
         public string Name { get; set; }
         public decimal? Salary { get; set; }
     }
