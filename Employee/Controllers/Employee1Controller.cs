@@ -17,7 +17,8 @@ namespace Employee.Controllers
 
         public Employee1Controller(ModelContext context)
         {
-            _context = context;
+            _context = context; 
+                 
         }
 
         // GET: api/Employee1
