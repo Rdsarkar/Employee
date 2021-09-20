@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Employee.Models;
+using Employee.DTOs;
 
 namespace Employee.Controllers
 {
@@ -25,7 +26,35 @@ namespace Employee.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Employee1>>> GetEmployee1s()
         {
-            return await _context.Employee1s.ToListAsync();
+            //return await _context.Employee1s.ToListAsync();
+            List<Employee1> employee1s = await _context.Employee1s
+                                      
+                                        .Where(p => p.Name == "string")
+                                        
+                                        .ToListAsync();
+
+            
+
+
+            if (employee1s.Count > 0)
+            {
+                
+                return StatusCode(StatusCodes.Status200OK, new ResponseDto
+                {
+                    Message = "Finally I have done this",
+                    Success = true,
+                    Payload = employee1s
+                });
+            }
+            else
+            {
+                return StatusCode(StatusCodes.Status404NotFound, new ResponseDto
+                {
+                    Message = "Not Found",
+                    Success = false,
+                    Payload = null
+                });
+            }
         }
 
         // GET: api/Employee1/5
