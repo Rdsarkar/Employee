@@ -24,21 +24,22 @@ namespace Employee.Controllers
 
         // GET: api/Employee1
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Employee1>>> GetEmployee1s()
+      
+        public async Task<ActionResult<ResponseDto>> GetEmployee1s()
         {
             //return await _context.Employee1s.ToListAsync();
             List<Employee1> employee1s = await _context.Employee1s
-                                      
+
                                         .Where(p => p.Name == "string")
-                                        
+
                                         .ToListAsync();
 
-            
+
 
 
             if (employee1s.Count > 0)
             {
-                
+
                 return StatusCode(StatusCodes.Status200OK, new ResponseDto
                 {
                     Message = "Finally I have done this",
