@@ -28,32 +28,27 @@ namespace Employee.Controllers
         public async Task<ActionResult<ResponseDto>> GetEmployee1s()
         {
             //return await _context.Employee1s.ToListAsync();
-            List<Employee1> employee1s = await _context.Employee1s
-
-                                        .Where(p => p.Name == "string")
-
-                                        .ToListAsync();
+            List<Employee1> employee1s = await _context.Employee1s.ToListAsync();
 
 
 
 
-            if (employee1s.Count > 0)
-            {
-
-                return StatusCode(StatusCodes.Status200OK, new ResponseDto
-                {
-                    Message = "Finally I have done this",
-                    Success = true,
-                    Payload = employee1s
-                });
-            }
-            else
+            if (employee1s.Count <=0)
             {
                 return StatusCode(StatusCodes.Status404NotFound, new ResponseDto
                 {
                     Message = "Not Found",
                     Success = false,
                     Payload = null
+                });
+            }
+            else
+            {
+                return StatusCode(StatusCodes.Status200OK, new ResponseDto
+                {
+                    Message = "Finally I have done this",
+                    Success = true,
+                    Payload = employee1s
                 });
             }
         }
